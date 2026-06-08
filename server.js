@@ -1,13 +1,17 @@
-require('dotenv').config();
+require('dotenv').config({ override: true });
 const express = require('express');
 const { connectKafka } = require('./src/kafka/consumer');
 const { connectMongo } = require('./src/db/mongo');
+const patientRoutes = require('./src/routes/patient');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());
+
+// Mount the router
+app.use('/api/patient', patientRoutes);
 
 // Basic health check endpoint to verify the Express server is routing correctly
 app.get('/api/health', (req, res) => {
