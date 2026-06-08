@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const { connectKafka } = require('./src/kafka/consumer');
+const { connectMongo } = require('./src/db/mongo');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -20,6 +21,7 @@ app.listen(PORT, async () => {
     // Connect to the Kafka stream once the server is up
     try {
         await connectKafka();
+        await connectMongo();
     } catch (error) {
         console.error('Failed to connect to Kafka stream:', error);
         process.exit(1); 
