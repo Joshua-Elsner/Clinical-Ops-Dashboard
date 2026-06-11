@@ -1,0 +1,6 @@
+node_modules/
+clinical-client/
+.env
+
+boston-hospital-pipeline-*.json
+*service-account*.json

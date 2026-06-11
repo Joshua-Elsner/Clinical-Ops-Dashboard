@@ -3,7 +3,7 @@ const { ClinicalAlert } = require('../db/mongo');
 
 const kafka = new Kafka({
   clientId: 'clinical-bff',
-  brokers: ['localhost:9092']
+  brokers: [process.env.KAFKA_BROKERS || 'localhost:9092']
 });
 
 const consumer = kafka.consumer({ groupId: 'dashboard-group' });

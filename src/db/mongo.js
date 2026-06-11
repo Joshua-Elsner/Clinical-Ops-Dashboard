@@ -15,7 +15,8 @@ const ClinicalAlert = mongoose.model('ClinicalAlert', alertSchema, 'clinical_ale
 const connectMongo = async () => {
     try {
         // Connect to the local Docker container
-        await mongoose.connect('mongodb://localhost:27017/clinical_command_center');
+        const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/clinical_command_center';
+        await mongoose.connect(mongoUri); 
         console.log('Node.js Backend connected to MongoDB Cache');
     } catch (error) {
         console.error('Failed to connect to MongoDB:', error);

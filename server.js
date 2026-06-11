@@ -13,7 +13,7 @@ const server = http.createServer(app);
 // Allow angular to connect
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:4200",
+        origin: "*",
         methods: ["GET", "POST"]
     }
 });
@@ -21,7 +21,7 @@ const io = new Server(server, {
 const PORT = process.env.PORT || 4000;
 
 app.use(cors({
-    origin: 'http://localhost:4200'
+    origin: '*'
 }));
 
 app.use(express.json());

@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-bff-api
+spec:
+  ports:
+  - port: 4000
+  selector:
+    app: node-bff
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-bff-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-bff
+  template:
+    metadata:
+      labels:
+        app: node-bff
+    spec:
+      containers:
+      - name: node-bff
+        image: clinical-node-bff:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 4000
+        env:
+        - name: MONGO_URI
+          value: "mongodb://clinic-mongo:27017/clinical_command_center"
+        - name: KAFKA_BROKERS
+          value: "host.minikube.internal:9092"
