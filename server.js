@@ -1,5 +1,6 @@
 require('dotenv').config({ override: true });
 const express = require('express');
+const cors = require('cors');
 const http = require('http'); 
 const { Server } = require('socket.io'); 
 const { connectKafka } = require('./src/kafka/consumer');
@@ -18,6 +19,11 @@ const io = new Server(server, {
 });
 
 const PORT = process.env.PORT || 4000;
+
+app.use(cors({
+    origin: 'http://localhost:4200'
+}));
+
 app.use(express.json());
 app.use('/api/patient', patientRoutes);
 
