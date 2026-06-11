@@ -8,7 +8,7 @@ const kafka = new Kafka({
 
 const consumer = kafka.consumer({ groupId: 'dashboard-group' });
 
-const connectKafka = async () => {
+const connectKafka = async (io) => {
   await consumer.connect();
   console.log('Node.js Backend connected to Kafka');
   
@@ -36,6 +36,8 @@ const connectKafka = async () => {
               // Write to MongoDB
               await newAlert.save();
               console.log(`[MongoDB Cache] Successfully logged CRITICAL maintenance alert for Patient: ${payload.patientId}`);
+
+              io.emit('device_alert', payload);
           }
       } catch (error) {
           console.error('[Kafka Stream] Error processing and saving message:', error);
